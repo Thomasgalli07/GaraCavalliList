@@ -6,7 +6,7 @@ public class Main {
         scanner input= new Scanner(System.in);
         String tmpS;
         int tmp;
-        ArrayList<Cavallo> listaCavallo= new ArrayList();
+        ArrayList<Cavallo> listaCavallo= new ArrayList<Cavallo>();
         for(int i=0;i<=4;i++){
             System.out.println("inserisci il nome del cavallo"+i);
             tmpS=input.nextLine();
@@ -20,16 +20,27 @@ public class Main {
             c.start();
         }
         for(Cavallo c: listaCavallo){
+            try {
+                c.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
         }
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        System.out.printf("Il primo cavallo: " + primo);
 
         for (int i = 1; i <= 5; i++) {
             //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
             // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
             System.out.println("i = " + i);
         }
+         public static String getPrimo() {
+        return primo;
+    }
+    public static void setPrimo(String primo) {
+        Main.primo = primo;
+    }
     }
 }
