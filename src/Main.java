@@ -6,7 +6,7 @@ public class Main {
         scanner input= new Scanner(System.in);
         String tmpS;
         int tmp;
-        ArrayList<Cavallo> listaCavallo= new ArrayList<Cavallo>();
+        ArrayList<Cavallo> listaCavallo= new ArrayList<>();
         for(int i=0;i<=4;i++){
             System.out.println("inserisci il nome del cavallo"+i);
             tmpS=input.nextLine();
@@ -19,23 +19,29 @@ public class Main {
         for(Cavallo c: listaCavallo){
             c.start();
         }
+         Random random = new Random();
+        int indexAzzoppato = random.nextInt(listaCavallo.size());
+        Cavallo cavalloAzzoppato = listaCavallo.get(indexAzzoppato);
+         try {
+            Thread.sleep(500 + random.nextInt(1000));
+            System.out.println("\nIl cavallo " + cavalloAzzoppato.getName() + " (" + indexAzzoppato + ") è stato AZZOPPATO!\n");
+            cavalloAzzoppato.azzoppa();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for(Cavallo c: listaCavallo){
             try {
                 c.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
         }
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Il primo cavallo: " + primo);
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+         if (primo.equals("")) {
+            System.out.println("Nessun cavallo è arrivato al traguardo!");
+        } else {
+            System.out.println("Il primo cavallo è: " + primo);
         }
+    }
          public static String getPrimo() {
         return primo;
     }
