@@ -2,11 +2,11 @@ public class Cavallo extends Thread{
 
     private final String name;
     private int lentezza;
+    private boolean azzoppato=false;
     public Cavallo(String name, int lentezza) {
         super();
         this.name = name;
         this.lentezza = lentezza;
-        private boolean azzoppato=false;
     }
     @Override
     public void run(){
