@@ -2,7 +2,6 @@ public class Cavallo extends Thread{
 
     private final String name;
     private int lentezza;
-    private boolean azzoppato=false;
     public Cavallo(String name, int lentezza) {
         super();
         this.name = name;
@@ -13,25 +12,19 @@ public class Cavallo extends Thread{
         System.out.println("Cavallo " +
                 name + " comincia il suo galoppo");
         for (int i = 1; i <= 10; i++) {
-             if (azzoppato || Thread.currentThread().isInterrupted()) {
-                System.out.println("Cavallo " + name + " è stato azzoppato e si ferma al passo " + (i - 1));
-                return;
-            }
             try {
                 sleep(lentezza);
             } catch (InterruptedException e) {
                 System.out.println("Cavallo " + name + " è stato azzoppato durante la corsa!");
+                finito=false;
                 return;
             }
             System.out.println(name +" cavalca - passo: " + i);
         }
-        if(!azzoppato && Main.getPrimo().equals("")){
-            Main.setPrimo(this.name);
+        if(finito==true){
+            GestoreGaraCavalli.setPrimo(name);
+            System.out.println(name+ "ha finito la gara");
         }
-    }
-    public void azzoppa() {
-        this.azzoppato = true;
-        this.interrupt();
     }
     
     protected int getLentezza(){
