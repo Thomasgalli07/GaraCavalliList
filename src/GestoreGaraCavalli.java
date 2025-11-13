@@ -1,12 +1,25 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.ArrayList;
+import java.util.Scanner
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+
 public class GestoreGaraCavalli {
     static String primo="";
+    static PrintWriter pw;
     public static void main(String[] args) {
         scanner input= new Scanner(System.in);
         String tmpS;
         int tmp;
-        ArrayList<Cavallo> listaCavallo= new ArrayList<>();
+        try{
+            pw= new PrintWriter(new FileWriter("risultati_della_gara.txt"));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        ArrayList<Cavallo> listaCavallo= new ArrayList<Cavallo>();
         for(int i=0;i<=4;i++){
             System.out.println("inserisci il nome del cavallo"+i);
             tmpS=input.nextLine();
@@ -19,16 +32,18 @@ public class GestoreGaraCavalli {
         for(Cavallo c: listaCavallo){
             c.start();
         }
-         Random random = new Random();
-        int indexAzzoppato = random.nextInt(listaCavallo.size());
-        Cavallo cavalloAzzoppato = listaCavallo.get(indexAzzoppato);
-         try {
-            Thread.sleep(500 + random.nextInt(1000));
-            System.out.println("\nIl cavallo " + cavalloAzzoppato.getName() + " (" + indexAzzoppato + ") è stato AZZOPPATO!\n");
-            cavalloAzzoppato.azzoppa();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if(!listaCavallo.isEmpty()){
+            int randomIntex=(int) (Math.random() * listaCavallo.size());
+            listaCavallo.get(randomIndex).interrupt();
         }
+        System.out.println("il primo cavallo:" + primo)
+        scriviNelFile(primo + "ha vinto la gara");
+
+        if (px!= null){
+            pw.close();
+        }input.close();
+    
+
         for(Cavallo c: listaCavallo){
             try {
                 c.join();
@@ -36,17 +51,20 @@ public class GestoreGaraCavalli {
                 throw new RuntimeException(e);
             }
         }
-         if (primo.equals("")) {
-            System.out.println("Nessun cavallo è arrivato al traguardo!");
-        } else {
-            System.out.println("Il primo cavallo è: " + primo);
-        }
-    }
+
+    
          public static String getPrimo() {
         return primo;
     }
-    public static void setPrimo(String primo) {
-        Main.primo = primo;
+    public static synchronized void setPrimo(String primo) {
+        if(GestoreGaraCavalli.primo.isEmpty()){
+            GestoreGaraCavalli.primo=primo;
+        }
     }
+public static synchronized void scriviNelFile(String testo){
+    if(pw!=null){
+        pw.println(testo);
+        pw.flush();
     }
 }
+    }
